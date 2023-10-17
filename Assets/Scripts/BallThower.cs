@@ -32,7 +32,7 @@ public class BallThower : MonoBehaviour
         ResetBall();
     }
 
-    void ResetBall()
+    public void ResetBall()
     {
         startPos = Vector2.zero;
         endPos = Vector2.zero;
@@ -62,7 +62,7 @@ public class BallThower : MonoBehaviour
 
     private void Update()
     {
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             if (holding)
             {
@@ -92,14 +92,14 @@ public class BallThower : MonoBehaviour
                 }
             }
 
-            else if(touch.phase == TouchPhase.Ended)
+            else if (touch.phase == TouchPhase.Ended)
             {
                 endTime = Time.time;
                 endPos = touch.position;
                 swipeDistance = (endPos - startPos).magnitude;
                 swipeTime = endTime - startTime;
 
-                if(swipeTime < 0.5f && swipeDistance > 30f)
+                if (swipeTime < 0.5f && swipeDistance > 30f)
                 {
                     CalSpeed();
                     CalAngle();
