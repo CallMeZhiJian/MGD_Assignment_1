@@ -14,9 +14,12 @@ public class Hole : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isHole = true;
-            
-            GameObject effect = Instantiate<GameObject>(particle, position.transform.position, Quaternion.Euler(-90, 0f, 0f));
-            Destroy(effect, 1f);
+
+            if (hint.activeInHierarchy)
+            {
+                GameObject effect = Instantiate<GameObject>(particle, position.transform.position, Quaternion.Euler(-90, 0f, 0f));
+                Destroy(effect, 1f);
+            }
         }
     }
 

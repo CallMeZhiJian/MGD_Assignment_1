@@ -107,7 +107,7 @@ public class BallThower : MonoBehaviour
                     rb.useGravity = true;
                     holding = false;
                     throwing = true;
-                    Invoke("ResetBall", 4f);
+                    //Invoke("ResetBall", 5f);
                 }
                 else
                 {

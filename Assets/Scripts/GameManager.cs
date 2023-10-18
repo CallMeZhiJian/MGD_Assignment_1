@@ -1,35 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public int levels;
+    public TextMeshProUGUI levelText;
     public GameObject[] Hints;
 
     private bool levelCleared;
     public static bool isActive;
 
+    public GameObject endingScreen;
+
     private void Start()
     {
         levels = 0;
-        levelCleared = false;
+        levelCleared = true;
         GenerateLevel();
     }
 
     private void Update()
     {
-        if(levels < 9)
+        if(levels <= 9)
         {
             if (levelCleared)
             {
                 levels++;
                 levelCleared = false;
+                levelText.text = "Level " + levels.ToString();
                 GenerateLevel();
             }
         }
         else
         {
+            endingScreen.SetActive(true);
+            Time.timeScale = 0f;
             return;
         }
         
@@ -51,39 +58,22 @@ public class GameManager : MonoBehaviour
     public void GenerateLevel()
     {
         List<int> checkNum = new List<int>{ 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-        int index = 0;
+        Shuffle(checkNum);
 
-        if(levels < 9)
+        for (int i = 0; i < levels; i++)
         {
-            while (index < levels)
-            {
-                for (int i = 0; i < levels; i++)
-                {
-                    if (checkNum[i] == Random.Range(0, 8))
-                    {
-                        Hints[checkNum[i]].SetActive(true);
-                        index++;
-                        checkNum[i] = 9;
-                    }
-                }
-            }
+            Hints[checkNum[i]].SetActive(true);
         }
-        else
+    }
+
+    void Shuffle<T>(List<T> shuffleNum)
+    {
+        for(int i = 0; i < shuffleNum.Count - 1; i++)
         {
-            for(int i = 0; i < Hints.Length; i++)
-            {
-                Hints[i].SetActive(true);
-            }
-        }
-        
-
-        //for (int i = 0; i < levels; i++)
-        //{
-        //    if(checkNum[i] == Random.Range(0, 8))
-        //    {
-        //        Hints[checkNum[i]].SetActive(true);
-        //    }
-        //}
-
+            T temp = shuffleNum[i];
+            int rand = Random.Range(i, shuffleNum.Count);
+            shuffleNum[i] = shuffleNum[rand];
+            shuffleNum[rand] = temp;
+        }      
     }
 }
